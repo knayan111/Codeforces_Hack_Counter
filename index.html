@@ -73,7 +73,7 @@
                     No. of successful hacking attempts:
                 </p>
                 <p id="hackedtot">
-                    No. of total hacking attempts:
+                    Total no. hacking attempts:
                 </p>
               <h5 class="w3-opacity"><b></b></h5>
               <h6 class="w3-text-teal"></h6>
@@ -128,11 +128,11 @@
             req2.send();
             req2.onload = function () {
             var data1 = JSON.parse(req2.responseText);
-            document.getElementById("hackedno").innerHTML ='No of times hacked: '+data1.n;
-            document.getElementById("hackedsuc").innerHTML ='No of successful hacking attempts: '+data1.sc;
+            document.getElementById("hackedno").innerHTML ='No. of times hacked: '+data1.n;
+            document.getElementById("hackedsuc").innerHTML ='No. of successful hacking attempts: '+data1.sc;
             var y=data1.tc-data1.sc;
-            document.getElementById("hackedus").innerHTML ='No of unsuccessful hacking attempts: '+y;
-            document.getElementById("hackedtot").innerHTML ='Total number hacking attempts: '+data1.tc;
+            document.getElementById("hackedus").innerHTML ='No. of unsuccessful hacking attempts: '+y;
+            document.getElementById("hackedtot").innerHTML ='Total no. hacking attempts: '+data1.tc;
 
             }
 
