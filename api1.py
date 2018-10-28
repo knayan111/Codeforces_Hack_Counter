@@ -25,13 +25,13 @@ def test_func():
     ans=list(set(ans))
     tc=sc=0
     for ci in ans:
-        res = requests.get("http://codeforces.com/api/contest.hacks?",params={"contestId":str(ci)})
-        jdata=res.json()
-        jres=jdata["result"]
-        for i in range(len(jres)):
-            if(jres[i]["hacker"]["members"][0]["handle"]=="user"):
+        res2 = requests.get("http://codeforces.com/api/contest.hacks?",params={"contestId":ci})
+        jdata=res2.json()
+        jres2=jdata["result"]
+        for i in range(len(jres2)):
+            if(jres2[i]["hacker"]["members"][0]["handle"]==u):
                 tc+=1
-                if(jres[i]["judgeProtocol"]["verdict"]=="Successful hacking attempt"): sc+=1
+                if(jres2[i]["judgeProtocol"]["verdict"]=="Successful hacking attempt"): sc+=1
     ret={"n":n,"tc":tc,"sc":sc}
     return (jsonify(ret))
 if __name__=="__main__":
