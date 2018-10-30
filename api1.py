@@ -1,6 +1,11 @@
-from flask import Flask,jsonify,request
+from flask import Flask,jsonify,request,render_template
 import requests
 app=Flask(__name__)
+
+@app.route('/')
+def index():
+    return render_template("index.html")
+
 @app.route("/test_api",methods=["GET"])
 def test_func():
     u=request.args.get("user")
@@ -35,4 +40,4 @@ def test_func():
     ret={"n":n,"tc":tc,"sc":sc}
     return (jsonify(ret))
 if __name__=="__main__":
-    app.run(port=1235)
+    app.run(port=1234)
