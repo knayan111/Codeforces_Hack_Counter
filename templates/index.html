@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <title>Codeforces Investigator</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+  html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
+  </style>
+  <body class="w3-light-grey">
+
+    <!-- Page Container -->
+    <div class="w3-content w3-margin-top" style="max-width:1400px;">
+
+      <!-- The Grid -->
+      <div class="w3-row-padding">
+      
+        <!-- Left Column -->
+        <div class="w3-third">
+        
+          <div class="w3-white w3-text-grey w3-card-4">
+            <div id="logo" class="w3-display-container w3-center">
+            </div>
+            <div class="w3-container">
+              <h1 class="w3-center w3-text-teal"></h1>
+              <p id="name"></p>
+              <p id="country"></p>
+              <p id="city"></p>
+              <p id="rating"></p>
+              <p id="friendOfCount"></p>
+              <p id="handle"></p>
+              <p id="contribution"></p>
+              <p id="organization"></p>
+              <p id="rank"></p>
+              <p id="maxRank"></p>
+              <p id="maxRating"></p>
+            </div>
+          </div><br>
+
+        <!-- End Left Column -->
+        </div>
+
+        <!-- Right Column -->
+        <div class="w3-twothird">
+        
+          <div class="w3-container w3-card w3-white w3-margin-bottom">
+                    <br>
+                    <div style="text-align:center">
+                    Codeforces Handle: <input id="username" type="text" name="fname"><br>
+                    </div>
+                    <br>
+                    <div style="text-align:center"><button id="button1" onclick="buttonclick()">Find</button></div>
+                  </form>
+            <h2 class="w3-text-grey w3-padding-16"></h2>
+            <div class="w3-container">
+              <h6 class="w3-text-teal"><span class="w3-tag w3-teal w3-round"></span></h6>
+              <hr>
+            </div>
+          </div>
+
+          <div class="w3-container w3-card w3-white">
+            <h2 class="w3-text-grey w3-padding-16"></h2>
+            <div class="w3-container">
+               <p id="hackedno">
+                   No. of times hacked:
+               </p>
+               <p id="hackedus">
+                  No. of unsuccessful hacking attempts:
+              </p>
+               <p id="hackedsuc">
+                    No. of successful hacking attempts:
+                </p>
+                <p id="hackedtot">
+                    Total no. hacking attempts:
+                </p>
+              <h5 class="w3-opacity"><b></b></h5>
+              <h6 class="w3-text-teal"></h6>
+                <br>
+              <hr>
+            </div>
+          </div>
+
+        <!-- End Right Column -->
+        </div>
+        
+      <!-- End Grid -->
+      </div>
+      
+      <!-- End Page Container -->
+    </div>
+
+    <footer class="w3-container w3-teal w3-center w3-margin-top">
+      <p>Find me on social media :</p>
+      <a href="https://www.linkedin.com/in/kamal-nayan-20b8ab155" target="_blank"><i class="fa fa-linkedin w3-xxlarge w3-hover-opacity"></i></a>&nbsp;&nbsp;
+      <a href="https://www.facebook.com/knayan111" target="_blank"><i class="fa fa-facebook-official w3-xxlarge w3-hover-opacity"></i></a>&nbsp;&nbsp;
+      <a href="https://www.instagram.com/know_nayan/" target="_blank"><i class="fa fa-instagram w3-xxlarge w3-hover-opacity"></i></a>
+      <p>Developed by Kamal Nayan and Shantanu Kumar</p>
+    </footer>
+    <script>
+        document.getElementById("username").addEventListener('keypress', function(event) {
+        if (event.keyCode == 13) {
+            buttonclick();
+        }
+    });
+        function buttonclick(){
+            var u=document.getElementById("username").value
+            var request = new XMLHttpRequest();
+            request.open('GET', 'http://codeforces.com/api/user.info?handles='+u, true);
+            request.send();
+            request.onload = function () {
+            var data = JSON.parse(request.responseText);
+            document.getElementById("logo").innerHTML = '<img  src=http:'+data.result[0].titlePhoto+' style="width:100%" alt="Avatar">';
+            document.getElementById("name").innerHTML = 'Name: '+data.result[0].firstName+' '+data.result[0].lastName;
+            document.getElementById("country").innerHTML ='Country: '+data.result[0].country;
+            document.getElementById("city").innerHTML ='City: '+data.result[0].city;
+            document.getElementById("rating").innerHTML ='Rating: '+data.result[0].rating;
+            document.getElementById("friendOfCount").innerHTML ='Friend of: '+data.result[0].friendOfCount;
+            document.getElementById("handle").innerHTML ='Handle: '+data.result[0].handle;
+            document.getElementById("contribution").innerHTML ='Contribution: '+data.result[0].contribution;
+            document.getElementById("organization").innerHTML ='Organization: '+data.result[0].organization;
+            document.getElementById("rank").innerHTML ='Rank: '+data.result[0].rank;
+            document.getElementById("maxRank").innerHTML ='Maximum Rank: '+data.result[0].maxRank;
+            document.getElementById("maxRating").innerHTML ='Maximum Rating: '+data.result[0].maxRating;
+            var req2=new XMLHttpRequest();
+            req2.open('GET', 'http://127.0.0.1:1234/test_api?user='+u, true);
+            req2.send();
+            req2.onload = function () {
+            var data1 = JSON.parse(req2.responseText);
+            document.getElementById("hackedno").innerHTML ='No. of times hacked: '+data1.n;
+            document.getElementById("hackedsuc").innerHTML ='No. of successful hacking attempts: '+data1.sc;
+            var y=data1.tc-data1.sc;
+            document.getElementById("hackedus").innerHTML ='No. of unsuccessful hacking attempts: '+y;
+            document.getElementById("hackedtot").innerHTML ='Total no. hacking attempts: '+data1.tc;
+
+            }
+
+            }
+        }
+        var request = new XMLHttpRequest();
+        request.open('GET', 'http://codeforces.com/api/user.info?handles=shan98', true);
+        request.send();
+        request.onload = function () {
+        var data = JSON.parse(request.responseText);
+        document.getElementById("logo").innerHTML = '<img  src=http:'+data.result[0].titlePhoto+' style="width:100%" alt="Avatar">';
+        document.getElementById("name").innerHTML = 'Name: ';
+        document.getElementById("country").innerHTML ='Country: ';
+        document.getElementById("city").innerHTML ='City: ';
+        document.getElementById("rating").innerHTML ='Rating: ';
+        document.getElementById("friendOfCount").innerHTML ='Friend of: ';
+        document.getElementById("handle").innerHTML ='Handle: ';
+        document.getElementById("contribution").innerHTML ='Contribution: ';
+        document.getElementById("organization").innerHTML ='Organization: ';
+        document.getElementById("rank").innerHTML ='Rank: ';
+        document.getElementById("maxRank").innerHTML ='Maximum Rank: ';
+        document.getElementById("maxRating").innerHTML ='Maximum Rating: ';
+        }
+    </script>
+  </body>
+</html>
