@@ -13,8 +13,41 @@
   html, body, h1, h2, h3, h4, h5, h6 {
     font-family: "Roboto", sans-serif
   }
+  #loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    width: 150px;
+    height: 150px;
+    margin: -75px 0 0 -75px;
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+  }
+
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
   </style>
   <body class = "w3-light-grey">
+    <header  class = "w3-container w3-teal w3-center w3-margin-top">
+      <h1>
+        <img  src = "../static/logo.png" height="42" width="50" alt = "Logo">&nbsp;Codeforces Hack Counter
+      </h1>
+    </header>
+    <div id = "loader" style = "display: none;">
+    </div>
     <!-- Page Container -->
     <div class = "w3-content w3-margin-top" style = "max-width: 1400px;">
       <!-- The Grid -->
@@ -28,38 +61,38 @@
             <div class = "w3-container">
               <h1 class = "w3-center w3-text-teal">
               </h1>
+              <p id = "handle">
+                Handle: 
+              </p>
               <p id = "name">
                 Name: 
-              </p>
-              <p id = "country">
-                Country: 
               </p>
               <p id = "city">
                 City: 
               </p>
-              <p id = "rating">
-                Rating: 
-              </p>
-              <p id = "friendOfCount">
-                Friend of: 
-              </p>
-              <p id = "handle">
-                Handle: 
-              </p>
-              <p id = "contribution">
-                Contribution: 
+              <p id = "country">
+                Country: 
               </p>
               <p id = "organization">
                 Organozation: 
+              </p>
+              <p id = "rating">
+                Rating: 
+              </p>
+              <p id = "maxRating">
+                Maximum Rating: 
               </p>
               <p id = "rank">
                 Rank: 
               </p>
               <p id = "maxRank">
-                  Maximum Rank: 
+                Maximum Rank: 
               </p>
-              <p id = "maxRating">
-                Maximum Rating: 
+              <p id = "friendOfCount">
+                Friend of: 
+              </p>
+              <p id = "contribution">
+                Contribution: 
               </p>
             </div>
           </div>
@@ -70,50 +103,27 @@
         <div class = "w3-twothird">
           <div class = "w3-container w3-card w3-white w3-margin-bottom">
             <br>
-            <div style = "text-align:center">
-            Codeforces Handle: <input id = "username" type = "text" name = "fname">
+            Codeforces Handle:&nbsp; <input id = "username" type = "text" name = "fname"> &nbsp;&nbsp;
+            <button id = "button1" onclick = "buttonclick()">
+              Find
+            </button>
             <br>
-            </div>
             <br>
-            <div style = "text-align:center">
-              <button id = "button1" onclick = "buttonclick()">
-                Find
-              </button>
-            </div>
-            <h2 class = "w3-text-grey w3-padding-16">
-            </h2>
-            <div class = "w3-container">
-              <h6 class = "w3-text-teal">
-                <span class = "w3-tag w3-teal w3-round">
-                </span>
-              </h6>
-              <hr>
-            </div>
           </div>
-          <div class = "w3-container w3-card w3-white">
-            <h2 class = "w3-text-grey w3-padding-16">
-            </h2>
+          <div class = "w3-container w3-card w3-white w3-margin-bottom">
             <div class = "w3-container">
               <p id = "hackedn">
-                  No. of times hacked:
+                No. of times hacked:
               </p>
               <p id = "hackedus">
-                  No. of unsuccessful hacking attempts:
+                No. of unsuccessful hacking attempts:
               </p>
-                <p id = "hackedsc">
-                  No. of successful hacking attempts:
-                </p>
-                <p id = "hackedtc">
-                  Total no. hacking attempts:
-                </p>
-              <h5 class = "w3-opacity">
-                <b>
-                </b>
-              </h5>
-              <h6 class = "w3-text-teal">
-              </h6>
-                <br>
-              <hr>
+              <p id = "hackedsc">
+                No. of successful hacking attempts:
+              </p>
+              <p id = "hackedtc">
+                Total no. hacking attempts:
+              </p>
             </div>
           </div>
         <!-- End Right Column -->
@@ -145,9 +155,11 @@
       function buttonclick(){
         var u = document.getElementById("username").value
         var req2 = new XMLHttpRequest();
+        document.getElementById("loader").style.display = "block";
         req2.open("GET", "http://127.0.0.1:1234/test_api?user=" + u, true);
         req2.send();
         req2.onload = function () {
+          document.getElementById("loader").style.display = "none";
           var data1 = JSON.parse(req2.responseText);
           document.getElementById("hackedn").innerHTML = "No. of times hacked: " + data1.n;
           document.getElementById("hackedsc").innerHTML = "No. of successful hacking attempts: " + data1.sc;
@@ -161,39 +173,19 @@
         request.onload = function () {
           var data = JSON.parse(request.responseText);
           document.getElementById("logo").innerHTML = "<img  src = http:" + data.result[0].titlePhoto + " style = 'width:100%' alt = 'Avatar'>";
-          document.getElementById("name").innerHTML = "Name: " + data.result[0].firstName + ' ' + data.result[0].lastName;
-          document.getElementById("country").innerHTML = "Country: " + data.result[0].country;
-          document.getElementById("city").innerHTML = "City: " + data.result[0].city;
-          document.getElementById("rating").innerHTML = "Rating: " + data.result[0].rating;
-          document.getElementById("friendOfCount").innerHTML = "Friend of: " + data.result[0].friendOfCount + "users";
           document.getElementById("handle").innerHTML = "Handle: " + data.result[0].handle;
-          document.getElementById("contribution").innerHTML = "Contribution: " + data.result[0].contribution;
+          document.getElementById("name").innerHTML = "Name: " + data.result[0].firstName + ' ' + data.result[0].lastName;
+          document.getElementById("city").innerHTML = "City: " + data.result[0].city;
+          document.getElementById("country").innerHTML = "Country: " + data.result[0].country;
           document.getElementById("organization").innerHTML = "Organization: " + data.result[0].organization;
+          document.getElementById("rating").innerHTML = "Rating: " + data.result[0].rating;
+          document.getElementById("maxRating").innerHTML = "Maximum Rating: " + data.result[0].maxRating;
           document.getElementById("rank").innerHTML = "Rank: " + data.result[0].rank;
           document.getElementById("maxRank").innerHTML = "Maximum Rank: " + data.result[0].maxRank;
-          document.getElementById("maxRating").innerHTML = "Maximum Rating: " + data.result[0].maxRating;
+          document.getElementById("friendOfCount").innerHTML = "Friend of: " + data.result[0].friendOfCount + " users";
+          document.getElementById("contribution").innerHTML = "Contribution: " + data.result[0].contribution;
         }
       }
-      /*
-      var request = new XMLHttpRequest();
-      request.open("GET", "http://codeforces.com/api/user.info?handles=knayan", true);
-      request.send();
-      request.onload = function () {
-        var data = JSON.parse(request.responseText);
-        document.getElementById("logo").innerHTML = "<img  src = avatar.jpg style = 'width:100%' alt = 'Avatar'>";
-        document.getElementById("name").innerHTML = "Name: ";
-        document.getElementById("country").innerHTML = "Country: ";
-        document.getElementById("city").innerHTML = "City: ";
-        document.getElementById("rating").innerHTML = "Rating: ";
-        document.getElementById("friendOfCount").innerHTML = "Friend of: ";
-        document.getElementById("handle").innerHTML = "Handle: ";
-        document.getElementById("contribution").innerHTML = "Contribution: ";
-        document.getElementById("organization").innerHTML = "Organization: ";
-        document.getElementById("rank").innerHTML = "Rank: ";
-        document.getElementById("maxRank").innerHTML = "Maximum Rank: ";
-        document.getElementById("maxRating").innerHTML = "Maximum Rating: ";
-      }
-      */
     </script>
   </body>
 </html>

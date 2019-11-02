@@ -36,9 +36,11 @@ def test_func():
   for ci in ans:
     res = requests.get("http://codeforces.com/api/contest.standings?", params = {"contestId": ci, "handles": u})
     jdata = res.json()
-    sc += jdata["result"]["rows"][0]["successfulHackCount"]
-    us += jdata["result"]["rows"][0]["unsuccessfulHackCount"]
-  ret={"n": n, "us": us, "sc": sc}
+    jres = jdata["result"]["rows"]
+    if jres:
+      sc += jres[0]["successfulHackCount"]
+      us += jres[0]["unsuccessfulHackCount"]
+  ret = {"n": n, "us": us, "sc": sc}
   return jsonify(ret)
 
 if __name__=="__main__":
