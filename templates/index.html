@@ -156,7 +156,7 @@
         var u = document.getElementById("username").value
         var req2 = new XMLHttpRequest();
         document.getElementById("loader").style.display = "block";
-        req2.open("GET", "http://127.0.0.1:1234/test_api?user=" + u, true);
+        req2.open("GET", "http://127.0.0.1:5000/test_api?user=" + u, true);
         req2.send();
         req2.onload = function () {
           document.getElementById("loader").style.display = "none";

@@ -44,4 +44,4 @@ def test_func():
   return jsonify(ret)
 
 if __name__=="__main__":
-    app.run(port=1234, debug = True)
+    app.run(debug = True)
