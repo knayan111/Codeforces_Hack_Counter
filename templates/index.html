@@ -112,17 +112,78 @@
             <div id = "loader" class = "w3-container" style = "display: none;">
             </div>
             <div id = "count" class = "w3-container">
-              <p id = "hackedn">
-                Total no. of times hacked:
+                <h2>
+                  Hack Counts
+                </h2>
+                <p id = "successfulHackCount">
+                  Successful Hack Count:
+                </p>
+                <p id = "unsuccessfulHackCount">
+                  Unsuccessful Hack Count:
+                </p>
+                <p id = "totalHackCount">
+                  Total Hack Count:
+                </p>
+                <hr>
+                <h2>
+                Submission Counts
+              </h2>
+              <p id = "FAILED">
+                Failed Count: 
               </p>
-              <p id = "hackedus">
-                Total no. of unsuccessful hacking attempts:
+              <p id = "OK">
+                Ok Count: 
               </p>
-              <p id = "hackedsc">
-                Total no. of successful hacking attempts:
+              <p id = "PARTIAL">
+                Partial Count: 
               </p>
-              <p id = "hackedtc">
-                Total no. hacking attempts:
+              <p id = "COMPILATION_ERROR">
+                Compilation Error Count: 
+              </p>
+              <p id = "RUNTIME_ERROR">
+                Runtime Error Count: 
+              </p>
+              <p id = "WRONG_ANSWER">
+                Wrong Answer Count:
+              </p>
+              <p id = "PRESENTATION_ERROR">
+                Presentation Error Count: 
+              </p>
+              <p id = "TIME_LIMIT_EXCEEDED">
+                Time Limit Exceeded Count: 
+              </p>
+              <p id = "MEMORY_LIMIT_EXCEEDED">
+                Memory Limit Exceeded Count: 
+              </p>
+              <p id = "IDLENESS_LIMIT_EXCEEDED">
+                Idleness Limit Exceeded Count: 
+              </p>
+              <p id = "SECURITY_VIOLATED">
+                Security Violated Count: 
+              </p>
+              <p id = "CRASHED">
+                Crashed Count: 
+              </p>
+              <p id = "INPUT_PREPARATION_CRASHED">
+                Input Preparation Crashed Count: 
+              </p>
+              <p id = "CHALLENGED">
+                Challenged Count: 
+              </p>
+              <p id = "SKIPPED">
+                Skipped Count: 
+              </p>
+              <p id = "TESTING">
+                Testing Count: 
+              </p>
+              <p id = "REJECTED">
+                Rejected Count: 
+              </p>
+              <p id = "ABSENT">
+                Absent Count: 
+              </p>
+              <p id = "totalSubmissionCount">
+                Total Submission Count: 
               </p>
             </div>
           </div>
@@ -156,25 +217,10 @@
       });
       function buttonclick(){
         var u = document.getElementById("username").value
-        var req2 = new XMLHttpRequest();
-        document.getElementById("count").style.display = "none";
-        document.getElementById("loader").style.display = "block";
-        req2.open("GET", "http://127.0.0.1:5000/test_api?user=" + u, true);
-        req2.send();
-        req2.onload = function () {
-          document.getElementById("count").style.display = "block";
-          document.getElementById("loader").style.display = "none";
-          var data1 = JSON.parse(req2.responseText);
-          document.getElementById("hackedn").innerHTML = "Total no. of times hacked: " + data1.n;
-          document.getElementById("hackedsc").innerHTML = "Total no. of successful hacking attempts: " + data1.sc;
-          document.getElementById("hackedus").innerHTML = "Total no. of unsuccessful hacking attempts: " + data1.us;
-          var tc = data1.sc + data1.us;
-          document.getElementById("hackedtc").innerHTML = "Total no. hacking attempts: " + tc;
-        }
-        var request = new XMLHttpRequest();
-        request.open("GET", "https://codeforces.com/api/user.info?handles=" + u, true);
-        request.send();
-        request.onload = function () {
+        var req = new XMLHttpRequest();
+        req.open("GET", "https://codeforces.com/api/user.info?handles=" + u, true);
+        req.send();
+        req.onload = function () {
           var data = JSON.parse(request.responseText);
           document.getElementById("logo").innerHTML = "<img  src = https:" + data.result[0].titlePhoto + " style = 'width:100%' alt = 'Avatar'>";
           document.getElementById("handle").innerHTML = "Handle: " + data.result[0].handle;
@@ -188,6 +234,40 @@
           document.getElementById("maxRank").innerHTML = "Maximum Rank: " + data.result[0].maxRank;
           document.getElementById("friendOfCount").innerHTML = "Friend of: " + data.result[0].friendOfCount + " users";
           document.getElementById("contribution").innerHTML = "Contribution: " + data.result[0].contribution;
+        }
+        var req2 = new XMLHttpRequest();
+        document.getElementById("count").style.display = "none";
+        document.getElementById("loader").style.display = "block";
+        req2.open("GET", "http://127.0.0.1:5000/test_api?user=" + u, true);
+        req2.send();
+        req2.onload = function () {
+          document.getElementById("count").style.display = "block";
+          document.getElementById("loader").style.display = "none";
+          var data2 = JSON.parse(req2.responseText);
+          document.getElementById("successfulHackCount").innerHTML = "Successful Hack Count: " + data2.successfulHackCount;
+          document.getElementById("unsuccessfulHackCount").innerHTML = "Unsuccessful Hack Count: " + data2.unsuccessfulHackCount;
+          var totalHackCount = data2.successfulHackCount + data2.unsuccessfulHackCount;
+          document.getElementById("totalHackCount").innerHTML = "Total Hack Count: " + totalHackCount;
+          document.getElementById("FAILED").innerHTML = "Failed Count: " + data2.FAILED;
+          document.getElementById("OK").innerHTML = "Ok Count: " + data2.OK;
+          document.getElementById("PARTIAL").innerHTML = "Partial Count: " + data2.PARTIAL;
+          document.getElementById("COMPILATION_ERROR").innerHTML = "Compilation Error Count: " + data2.COMPILATION_ERROR;
+          document.getElementById("RUNTIME_ERROR").innerHTML = "Runtime Error Count: " + data2.RUNTIME_ERROR;
+          document.getElementById("WRONG_ANSWER").innerHTML = "Wrong Answer Count: " + data2.WRONG_ANSWER;
+          document.getElementById("PRESENTATION_ERROR").innerHTML = "Presentation Error Count: " + data2.PRESENTATION_ERROR;
+          document.getElementById("TIME_LIMIT_EXCEEDED").innerHTML = "Time Limit Exceeded Count: " + data2.TIME_LIMIT_EXCEEDED;
+          document.getElementById("MEMORY_LIMIT_EXCEEDED").innerHTML = "Memory Limit Exceeded Count: " + data2.MEMORY_LIMIT_EXCEEDED;
+          document.getElementById("IDLENESS_LIMIT_EXCEEDED").innerHTML = "Idleness Limit Exceeded Count: " + data2.IDLENESS_LIMIT_EXCEEDED;
+          document.getElementById("SECURITY_VIOLATED").innerHTML = "Security Violated Count: " + data2.SECURITY_VIOLATED;
+          document.getElementById("CRASHED").innerHTML = "Crashed Count: " + data2.CRASHED;
+          document.getElementById("INPUT_PREPARATION_CRASHED").innerHTML = "Input Preparation Crashed Count: " + data2.INPUT_PREPARATION_CRASHED;
+          document.getElementById("CHALLENGED").innerHTML = "Challenged Count: " + data2.CHALLENGED;
+          document.getElementById("SKIPPED").innerHTML = "Skipped Count: " + data2.SKIPPED;
+          document.getElementById("TESTING").innerHTML = "Testing Count: " + data2.TESTING;
+          document.getElementById("REJECTED").innerHTML = "Rejected Count: " + data2.REJECTED;
+          document.getElementById("ABSENT").innerHTML = "Absent Count: " + data2.ABSENT;
+          var totalSubmissionCount = data2.FAILED + data2.OK + data2.PARTIAL + data2.COMPILATION_ERROR + data2.RUNTIME_ERROR + data2.WRONG_ANSWER + data2.PRESENTATION_ERROR + data2.TIME_LIMIT_EXCEEDED + data2.MEMORY_LIMIT_EXCEEDED + data2.IDLENESS_LIMIT_EXCEEDED + data2.SECURITY_VIOLATED + data2.CRASHED + data2.INPUT_PREPARATION_CRASHED + data2.CHALLENGED + data2.SKIPPED + data2.TESTING + data2.REJECTED + data2.ABSENT
+          document.getElementById("totalSubmissionCount").innerHTML = "Total Submission Count: " + totalSubmissionCount;
         }
       }
     </script>
