@@ -5,9 +5,9 @@ A flask web app that counts the total no. of times hacked, total no. of successf
 
 ![Demo](/demo.gif)
 
-### Try it locally
+## Try it locally
 
-#### Open Terminal
+### Open Terminal
 ```bash
 git clone https://github.com/knayan111/Codeforces_Hack_Counter.git
 cd Codeforces_Hack_Counter
@@ -15,8 +15,10 @@ pip3 install -r requirements.txt
 python3 main.py
 ```
 
-#### Open browser
-http://127.0.0.1:5000/
+### Open browser
+[http://127.0.0.1:5000/](http://127.0.0.1:5000/ "LocalHost: Codeforces Hack Counter")
 
-#### To close
+### To close
 Press 'Ctrl + C' in terminal
+
+## Discuss on [Codeforces](https://codeforces.com/blog/entry/71132 "Discuss on Codeforces") and [CodeChef](https://discuss.codechef.com/t/codeforces-hack-counter/43614 "Discuss on CodeChef")
