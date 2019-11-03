@@ -10,36 +10,24 @@ def index():
 @app.route("/test_api", methods = ["GET"])
 def test_func():
   u = request.args.get("user")
-  res = requests.get("http://codeforces.com/api/user.status?", params={"handle": u})
+  res = requests.get("https://codeforces.com/api/user.status?", params={"handle": u})
   jdata = res.json()
   jres = jdata["result"]
   n = 0
-  for i in range(len(jres)):
-    if(jres[i]["verdict"] == "CHALLENGED"):
+  for i in jres:
+    if(i["verdict"] == "CHALLENGED"):
       n += 1
-  req = requests.get("https://codeforces.com/contests/with/" + u)
-  wp = str(req.content)
-  st = '<a href="/contest/'
-  ans = []
-  for i in range(len(wp) - 20):
-    if wp[i : i + 18] == st:
-      temp = ""
-      for j in range(4):
-        if wp[i + 18 + j].isdigit():
-          temp += wp[i + j + 18]    
-        else:
-          break
-      if temp != "":
-        ans.append(int(temp))
-  ans = list(set(ans))
+  res = requests.get("https://codeforces.com/api/user.rating?", params={"handle": u})
+  jdata = res.json()
+  jres = jdata["result"]
   us = sc = 0
-  for ci in ans:
-    res = requests.get("http://codeforces.com/api/contest.standings?", params = {"contestId": ci, "handles": u})
-    jdata = res.json()
-    jres = jdata["result"]["rows"]
-    if jres:
-      sc += jres[0]["successfulHackCount"]
-      us += jres[0]["unsuccessfulHackCount"]
+  for i in jres:
+    res2 = requests.get("https://codeforces.com/api/contest.standings?", params = {"contestId": i["contestId"], "handles": u})
+    jdata2 = res2.json()
+    jres2 = jdata2["result"]["rows"]
+    if jres2:
+      sc += jres2[0]["successfulHackCount"]
+      us += jres2[0]["unsuccessfulHackCount"]  
   ret = {"n": n, "us": us, "sc": sc}
   return jsonify(ret)
 

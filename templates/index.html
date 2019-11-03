@@ -168,11 +168,11 @@
           document.getElementById("hackedtc").innerHTML = "Total no. hacking attempts: " + tc;
         }
         var request = new XMLHttpRequest();
-        request.open("GET", "http://codeforces.com/api/user.info?handles=" + u, true);
+        request.open("GET", "https://codeforces.com/api/user.info?handles=" + u, true);
         request.send();
         request.onload = function () {
           var data = JSON.parse(request.responseText);
-          document.getElementById("logo").innerHTML = "<img  src = http:" + data.result[0].titlePhoto + " style = 'width:100%' alt = 'Avatar'>";
+          document.getElementById("logo").innerHTML = "<img  src = https:" + data.result[0].titlePhoto + " style = 'width:100%' alt = 'Avatar'>";
           document.getElementById("handle").innerHTML = "Handle: " + data.result[0].handle;
           document.getElementById("name").innerHTML = "Name: " + data.result[0].firstName + ' ' + data.result[0].lastName;
           document.getElementById("city").innerHTML = "City: " + data.result[0].city;
