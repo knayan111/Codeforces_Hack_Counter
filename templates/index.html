@@ -113,13 +113,13 @@
             </div>
             <div id = "count" class = "w3-container">
               <p id = "hackedn">
-                No. of times hacked:
+                Total no. of times hacked:
               </p>
               <p id = "hackedus">
-                No. of unsuccessful hacking attempts:
+                Total no. of unsuccessful hacking attempts:
               </p>
               <p id = "hackedsc">
-                No. of successful hacking attempts:
+                Total no. of successful hacking attempts:
               </p>
               <p id = "hackedtc">
                 Total no. hacking attempts:
@@ -165,9 +165,9 @@
           document.getElementById("count").style.display = "block";
           document.getElementById("loader").style.display = "none";
           var data1 = JSON.parse(req2.responseText);
-          document.getElementById("hackedn").innerHTML = "No. of times hacked: " + data1.n;
-          document.getElementById("hackedsc").innerHTML = "No. of successful hacking attempts: " + data1.sc;
-          document.getElementById("hackedus").innerHTML = "No. of unsuccessful hacking attempts: " + data1.us;
+          document.getElementById("hackedn").innerHTML = "Total no. of times hacked: " + data1.n;
+          document.getElementById("hackedsc").innerHTML = "Total no. of successful hacking attempts: " + data1.sc;
+          document.getElementById("hackedus").innerHTML = "Total no. of unsuccessful hacking attempts: " + data1.us;
           var tc = data1.sc + data1.us;
           document.getElementById("hackedtc").innerHTML = "Total no. hacking attempts: " + tc;
         }
