@@ -15,13 +15,9 @@
     font-family: "Roboto", sans-serif
   }
   #loader {
-    position: absolute;
-    left: 50%;
-    top: 50%;
     z-index: 1;
     width: 150px;
     height: 150px;
-    margin: -75px 0 0 -75px;
     border: 16px solid #f3f3f3;
     border-radius: 50%;
     border-top: 16px solid #3498db;
@@ -50,8 +46,6 @@
         <img  src = "../static/logo.png" height="42" width="50" alt = "Logo">&nbsp;Codeforces Hack Counter
       </h1>
     </header>
-    <div id = "loader" style = "display: none;">
-    </div>
     <!-- Page Container -->
     <div class = "w3-content w3-margin-top" style = "max-width: 1400px;">
       <!-- The Grid -->
@@ -115,7 +109,9 @@
             <br>
           </div>
           <div class = "w3-container w3-card w3-white w3-margin-bottom">
-            <div class = "w3-container">
+            <div id = "loader" class = "w3-container" style = "display: none;">
+            </div>
+            <div id = "count" class = "w3-container">
               <p id = "hackedn">
                 No. of times hacked:
               </p>
@@ -159,10 +155,12 @@
       function buttonclick(){
         var u = document.getElementById("username").value
         var req2 = new XMLHttpRequest();
+        document.getElementById("count").style.display = "none";
         document.getElementById("loader").style.display = "block";
         req2.open("GET", "http://127.0.0.1:5000/test_api?user=" + u, true);
         req2.send();
         req2.onload = function () {
+          document.getElementById("count").style.display = "block";
           document.getElementById("loader").style.display = "none";
           var data1 = JSON.parse(req2.responseText);
           document.getElementById("hackedn").innerHTML = "No. of times hacked: " + data1.n;
